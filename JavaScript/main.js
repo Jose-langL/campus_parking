@@ -38,7 +38,7 @@ function validarformulario(e) {
         alert("Esta placa ya está registrada");
         return;
     }
-    nuevovehiculo = { Placa, TipoVehiculo, FechaIngreso, Slot };
+    const nuevovehiculo = { Placa, TipoVehiculo, FechaIngreso, Slot };
 
 
     Vehiculos.push(nuevovehiculo);
@@ -81,6 +81,22 @@ function datostabla() {
     });
 }
 
+function mostrarHistorial() {
+    if (!tablasalida) return;
+    tablasalida.innerHTML = "";
+    HistorialVehiculos.forEach(registro => {
+        tablasalida.innerHTML += `
+        <tr>
+            <td>${registro.Placa}</td>
+            <td>${registro.TipoVehiculo}</td>
+            <td>${registro.FechaIngreso}</td>
+            <td>${registro.HoraSalida}</td>
+            <td>${registro.SlotLiberado}</td>
+            <td>Q${registro.TotalPagado}</td>
+        </tr>`;
+    });
+}
+
 
 //Funcion para eliminar datos de la tabla y localstorage
 function EliminarVehiculo(posicion) {
@@ -106,6 +122,17 @@ function ModificarVehiculo(posicion) {
     if (respuesta == true) {
         const nuevotipo = prompt("Ingrese el nuevo tipo de vehiculo");
         const nuevoSlot = prompt("Ingrese el nuevo espacio");
+
+        if (nuevotipo === null || nuevoSlot === null || nuevotipo.trim() === "" || !Number.isInteger(Number(nuevoSlot)) || Number(nuevoSlot) < 1 || Number(nuevoSlot) > 20) {
+            alert("Los datos ingresados no son válidos");
+            return;
+        }
+
+        const espacioOcupado = Vehiculos.some((vehiculo, indice) => indice !== posicion && Number(vehiculo.Slot) === Number(nuevoSlot));
+        if (espacioOcupado) {
+            alert("Este espacio ya está ocupado. Elige otro.");
+            return;
+        }
 
 
         Vehiculos[posicion].TipoVehiculo = nuevotipo;
@@ -163,20 +190,10 @@ function pagarParqueo(posicion) {
         HistorialVehiculos.push(registroHistorial);
         localStorage.setItem("HistorialVehiculos", JSON.stringify(HistorialVehiculos));
 
-        tablasalida.innerHTML += `
-        <tr>
-            <td>${hora.Placa}</td>
-            <td>${hora.TipoVehiculo}</td>
-            <td>${fecha_hora[0]}</td>
-            <td>${hora_limpia_salida}</td>
-            <td>${hora.Slot}</td>
-            <td>Q${Total.toFixed(2)}</td>
-        </tr>`;
-
-
         Vehiculos.splice(posicion, 1);
         localStorage.setItem("Vehiculos", JSON.stringify(Vehiculos));
         datostabla();
+        mostrarHistorial();
         espacios();
     } else {
         alert("El proceso de pago se ha cancelado");
@@ -187,6 +204,7 @@ function pagarParqueo(posicion) {
 // Minimo y Maximo de la fecha
 function fechainteractiva() {
     const datetimeinput = document.getElementById("fechaingreso");
+    if (!datetimeinput) return;
     const fechaactual = new Date();
 
 
@@ -252,6 +270,7 @@ function importarChartJS(callback) {
 }
 window.addEventListener("DOMContentLoaded", () => {
     datostabla();
+    mostrarHistorial();
     espacios();
     //Info vehiculos Parqueados
     const txtVehiculosDentro = document.getElementById("informacionKPIS1");
@@ -259,7 +278,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
 
         txtVehiculosDentro.innerHTML = `
-        <h4>Vehiculos Parqueados</h4>
+        <h4>Vehículos en el parqueo</h4>
         <h2>${Vehiculos.length}</h2>`
     }
 
@@ -268,7 +287,7 @@ window.addEventListener("DOMContentLoaded", () => {
     const tiempototal = document.getElementById("informacionKPIS2");
     if (tiempototal) {
         tiempototal.innerHTML = `
-        <h4>Vehiculos a los cuales les prestamos el servicio</h4>
+        <h4>Vehículos atendidos</h4>
         <h2>${HistorialVehiculos.length}</h2>
         `
     }
@@ -282,7 +301,7 @@ window.addEventListener("DOMContentLoaded", () => {
             GananciasPorTipo["Camión"];
     
         ganancias2.innerHTML = `
-        <h4>Ingresos Hoy</h4>
+        <h4>Ingresos acumulados</h4>
         <h2>Q${totalDinero.toFixed(2)}</h2>`;
     }
     
@@ -323,12 +342,12 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
     //En vehiculos Parqueados hay 0 porque cuando se da a pagar se eliminan ya que salieron entonces queda en 0  
-    const inputfecha = document.getElementById("fecha")
-    inputfecha.addEventListener("change", (evento) => {
-        const fechaseleccionada = evento.target.value;
-
-        filtrarporfecha(fechaseleccionada);
-    })
+    const inputfecha = document.getElementById("fecha");
+    if (inputfecha) {
+        inputfecha.addEventListener("change", (evento) => {
+            filtrarporfecha(evento.target.value);
+        });
+    }
 
     function filtrarporfecha(fechaseleccionada){
         let ingresodeldia = 0 ;
@@ -339,5 +358,8 @@ window.addEventListener("DOMContentLoaded", () => {
                 ingresodeldia += Number(registrofecha.TotalPagado);
             }
         });
-        document.getElementById("informacionKPIS4").innerHTML = `<h2>Q${ingresodeldia.toFixed(2)}</h2>`;
+        const resultado = document.getElementById("resultadoFecha");
+        if (resultado) {
+            resultado.innerHTML = `<h4>Ingresos del ${fechaseleccionada}</h4><h2>Q${ingresodeldia.toFixed(2)}</h2>`;
+        }
     }

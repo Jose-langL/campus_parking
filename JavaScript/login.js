@@ -3,7 +3,6 @@ const Usuario = document.getElementById("Usuario");
 const Contra = document.getElementById("Contraseña");
 const email = document.getElementById("email")
 const BtnLogin = document.getElementById("LoginButton");
-// const BtnCerrar = document.getElementById("Btnsalir")
 const Usuarioprueba = "Admin1";
 const Contraprueba = "admin123";
 const emailprueba = "admin1@gmail.com"
@@ -23,5 +22,6 @@ const validaUsuario = () => {
     }
 }
 
-const btnenter = document.getElementById("LoginButton");
-    btnenter.addEventListener('click', validaUsuario);
+if (BtnLogin) {
+    BtnLogin.addEventListener("click", validaUsuario);
+}
