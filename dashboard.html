@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./Estilos/Estilos.css">
     <link rel="stylesheet" href="./Estilos/responsive.css">
-    <title>Dashboardt</title>
+    <title>Panel | Campus Parking</title>
 </head>
 
 <body>
@@ -30,15 +30,11 @@
         <div class="contenidonav">
             <nav class="navbar">
                 <ul>
-                    <a href="./dashboard.html">
-                        <li>Dashboard</li>
-                    </a>
-                    <a href="./index.html">
-                        <li>Operaciones</li>
-                    </a>
+                    <li class="active"><a href="./dashboard.html">Dashboard</a></li>
+                    <li><a href="./index.html">Operaciones</a></li>
                 </ul>
 
-                <button class="BtnCerrrar"><a href="./login.html">Cerrar Sesion</a></button>
+                <a class="BtnCerrrar" href="./login.html">Cerrar sesión</a>
             </nav>
         </div>
 
@@ -55,12 +51,14 @@
                 </div>
 
                 <div class="contendorblanco" id="informacionKPIS4">
+                    <label for="fecha">Consultar ingresos por fecha</label>
                     <input type="date" id="fecha">
+                    <div id="resultadoFecha"><h4>Selecciona una fecha para consultar</h4></div>
                 </div>
             </div>
             <div class="arriba">
                 <div class="contendorblanco" id="ETDCIngresos">
-                    <h1>Estadisiticas</h1>
+                    <h1>Ingresos por tipo de vehículo</h1>
                 <div class="GraficaContenedor">
                     <canvas id="Grafica"></canvas>
                 </div> 

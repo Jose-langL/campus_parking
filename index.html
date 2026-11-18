@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 
 <head>
@@ -19,7 +19,7 @@
        </div>
 
 
-       <div class="titulo">
+           <div class="titulo">
            <h1>Sistema Integrado de Parqueo</h1>
        </div>
 
@@ -36,12 +36,12 @@
        <div class="contenidonav">
            <nav class="navbar">
                <ul>
-                   <a href="./dashboard.html"><li>Dashboard</li></a>
-                   <a href="./index.html"><li>Operaciones</li></a>
+                   <li><a href="./dashboard.html">Dashboard</a></li>
+                   <li class="active"><a href="./index.html">Operaciones</a></li>
                </ul>
 
 
-               <button class="BtnCerrrar"><a href="./login.html">Cerrar Sesion</a></button>
+               <a class="BtnCerrrar" href="./login.html">Cerrar sesión</a>
            </nav>
        </div>
 
@@ -57,25 +57,25 @@
 
 
                        <div class="formulario">
-                           <label>Placa:</label>
+                           <label for="Placa">Placa:</label>
                            <input type="text" id="Placa" maxlength="7" placeholder="Ingresa una placa (Ej: P123SAT)" required/>
                        </div>
 
 
                        <div class="formulario">
-                           <label>Propietario:</label>
-                           <input type="text" placeholder="Ingresa el nombre del dueño" required/>
+                           <label for="Propietario">Propietario:</label>
+                           <input type="text" id="Propietario" placeholder="Ingresa el nombre del dueño" required/>
                        </div>
 
 
                        <div class="formulario">
-                           <label>Teléfono:</label>
-                           <input type="text" maxlength="8" placeholder="Ingresa el número del dueño" required/>
+                           <label for="Telefono">Teléfono:</label>
+                           <input type="tel" id="Telefono" maxlength="8" placeholder="Ingresa el número del dueño" required/>
                        </div>
 
 
                        <div class="formulario">
-                           <label>Tipo de Vehículo:</label>
+                           <label for="TipoVehiculo">Tipo de vehículo:</label>
                            <select id="TipoVehiculo">
                                <option>Carro</option>
                                <option>Moto</option>
@@ -86,19 +86,19 @@
 
 
                        <div class="formulario">
-                           <label>Fecha de ingreso:</label>
-                           <input type="datetime-local" id="fechaingreso" max="2026-05-31T23:59" min="2024-06-01T00:00"required/>
+                           <label for="fechaingreso">Fecha de ingreso:</label>
+                           <input type="datetime-local" id="fechaingreso" required/>
                        </div>
 
 
                        <div class="formulario">
-                           <label>Espacio:</label>
-                           <input type="number" id="Espacio"  placeholder="Ingresa un lugar del     1-20" required min="0" max="20"/>
+                           <label for="Espacio">Espacio:</label>
+                           <input type="number" id="Espacio" placeholder="Ingresa un lugar del 1 al 20" required min="1" max="20"/>
                        </div>
 
 
                        <div class="formulario">
-                           <label>Tarifa Hora:</label>
+                           <label for="TarifaHora">Tarifa por hora:</label>
                            <select id="TarifaHora">
                                <option value="10">Q10</option>
                                <option value="20">Q20</option>
@@ -116,7 +116,7 @@
                <!-- Informacion de tarifas -->
                <div class="contendorblanco" id="contendortarifa">
                    <div class="tabla-responsive">
-                   <h1>Horarios y Tarifass</h1>
+                   <h1>Tarifas por hora</h1>
                    <table>
                        <thead>
                            <tr>
@@ -138,7 +138,7 @@
 
 
                            <tr>
-                               <td>Camionetas</td>
+                               <td>Bus</td>
                                <td>Q25</td>
                            </tr>
 
@@ -162,16 +162,16 @@
            <div class="tabla-responsive">
            <!-- tabla de vehiculos registrados -->
            <div class="arriba">
-               <div class="contendorblanco" id="contenedor2">
-                   <h1>Entrada vehiculos</h1>
-                   <table id="tabla1">
+               <div class="contendorblanco" id="contenedorEntradas">
+                   <h1>Vehículos en el parqueo</h1>
+                   <table id="tablaEntradas">
                        <thead>
                            <tr>
                                <th>Placa</th>
-                               <th>Tipo de Vehiculo</th>
+                               <th>Tipo de vehículo</th>
                                <th>Fecha</th>
                                <th>Hora Entrada</th>
-                               <th>Slot</th>
+                               <th>Espacio</th>
                                <th>Eliminar</th>
                                <th>Modificar</th>
                                <th>Pagar</th>
@@ -186,16 +186,16 @@
            <!-- Tabla de vehiculos de Salida -->
              <div class="tabla-responsive">
             <div class="arriba">
-               <div class="contendorblanco" id="contenedor2">
-                   <h1>Salida vehiculos</h1>
-                   <table id="tabla1">
+               <div class="contendorblanco" id="contenedorSalidas">
+                   <h1>Historial de salidas</h1>
+                   <table id="tablaSalidas">
                        <thead>
                            <tr>
                                <th>Placa</th>
-                               <th>Tipo de Vehiculo</th>
+                               <th>Tipo de vehículo</th>
                                <th>Fecha</th>
                                <th>Hora Salida</th>
-                               <th>Slot</th>
+                               <th>Espacio</th>
                                <th>Pagar</th>
                            </tr>
                        </thead>
